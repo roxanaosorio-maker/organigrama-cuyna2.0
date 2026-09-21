@@ -127,6 +127,7 @@
   .node.person.sup{border-color:var(--teal);}
   .node.person.rev{border-color:var(--rust);}
   .node.person.ops{border-color:var(--terracotta);}
+  .node.person.fractional{border-style:dashed; background:repeating-linear-gradient(135deg, rgba(0,0,0,.045) 0 6px, transparent 6px 12px);}
 
   svg#lines{position:absolute; top:0; left:0; overflow:visible; pointer-events:none; z-index:1;}
 
@@ -226,6 +227,7 @@
     <h2 data-i18n="chartH2"></h2>
     <p data-i18n="chartP"></p>
     <div class="hint" data-i18n="hint"></div>
+    <div class="hint" data-i18n="hintFractional"></div>
   </div>
   <div id="treeRoot"></div>
 </div>
@@ -302,6 +304,10 @@ const I18N = {
   "hint": {
     "es": "Haz clic en <b>cualquier persona</b> para conocer sus funciones.",
     "en": "Click on <b>any person</b> to see their role and responsibilities."
+  },
+  "hintFractional": {
+    "es": "Los perfiles con borde discontinuo y sombreado son servicios externos contratados (<b>fractional</b>).",
+    "en": "Profiles with a dashed, shaded border are externally contracted services (<b>fractional</b>)."
   },
   "cultureStrong": {
     "es": "La cultura y el talento, el corazón de Cuyna",
@@ -385,11 +391,11 @@ const NODES = [
     "id": "omar",
     "name": "Omar Awad",
     "role": {
-      "es": "Head of Finance",
-      "en": "Head of Finance"
+      "es": "Head of Finance (Fractional)",
+      "en": "Head of Finance (Fractional)"
     },
     "manager": "d-fin",
-    "type": "person head fin",
+    "type": "person head fin fractional",
     "roleKey": "headfinance",
     "dept": "fin"
   },
@@ -442,12 +448,24 @@ const NODES = [
     "id": "paola",
     "name": "Paola Cantieri",
     "role": {
-      "es": "Culture & Talent",
-      "en": "Culture & Talent"
+      "es": "People & Culture Senior Associate",
+      "en": "People & Culture Senior Associate"
     },
     "manager": "d-peo",
     "type": "person head peo",
     "roleKey": "culture",
+    "dept": "peo"
+  },
+  {
+    "id": "roxana",
+    "name": "Roxana Osorio",
+    "role": {
+      "es": "People Admin",
+      "en": "People Admin"
+    },
+    "manager": "paola",
+    "type": "person peo",
+    "roleKey": "peopleadmin",
     "dept": "peo"
   },
   {
@@ -463,18 +481,6 @@ const NODES = [
     "dept": "peo"
   },
   {
-    "id": "roxana",
-    "name": "Roxana Osorio",
-    "role": {
-      "es": "People Admin",
-      "en": "People Admin"
-    },
-    "manager": "d-peo",
-    "type": "person head peo",
-    "roleKey": "peopleadmin",
-    "dept": "peo"
-  },
-  {
     "id": "d-sup",
     "name": {
       "es": "Supply Chain",
@@ -487,12 +493,12 @@ const NODES = [
     "id": "nacho",
     "name": "Nacho Caño",
     "role": {
-      "es": "Supply Chain",
-      "en": "Supply Chain"
+      "es": "Supply Chain (Fractional)",
+      "en": "Supply Chain (Fractional)"
     },
     "manager": "d-sup",
-    "type": "person head sup",
-    "roleKey": "supply",
+    "type": "person head sup fractional",
+    "roleKey": "supplyfractional",
     "dept": "sup"
   },
   {
@@ -520,8 +526,8 @@ const NODES = [
     "id": "moises",
     "name": "Moises Cano",
     "role": {
-      "es": "Growth Manager",
-      "en": "Growth Manager"
+      "es": "Revenue Manager",
+      "en": "Revenue Manager"
     },
     "manager": "d-rev",
     "type": "person head rev",
@@ -713,8 +719,8 @@ const ROLES = {
   },
   "headfinance": {
     "title": {
-      "es": "Head of Finance",
-      "en": "Head of Finance"
+      "es": "Head of Finance (Fractional)",
+      "en": "Head of Finance (Fractional)"
     },
     "fn": {
       "es": [
@@ -781,8 +787,8 @@ const ROLES = {
   },
   "culture": {
     "title": {
-      "es": "Culture & Talent",
-      "en": "Culture & Talent"
+      "es": "People & Culture Senior Associate",
+      "en": "People & Culture Senior Associate"
     },
     "fn": {
       "es": [
@@ -853,10 +859,34 @@ const ROLES = {
       ]
     }
   },
+  "supplyfractional": {
+    "title": {
+      "es": "Supply Chain (Fractional)",
+      "en": "Supply Chain (Fractional)"
+    },
+    "fn": {
+      "es": [
+        "Asegurar el suministro de producto, supervisando coberturas, roturas y días de stock.",
+        "Coordinación con operaciones y cocina para anticipar picos de demanda y lanzamientos.",
+        "Mantener actualizada la información en REM (escandallos, consumos, proveedores, stocks de seguridad).",
+        "Definir la estrategia de planificación de producción y negociar con proveedores.",
+        "Generar ahorros y beneficios adicionales en lanzamientos, aperturas o eventos corporativos.",
+        "Controlar el desperdicio y hacer seguimiento de los planes de acción."
+      ],
+      "en": [
+        "Ensure product supply, monitoring coverage, stock-outs and days of stock.",
+        "Coordinate with operations and kitchens to anticipate demand peaks and launches.",
+        "Keep REM up to date (recipes/costings, consumption, suppliers, safety stock).",
+        "Define the production planning strategy and negotiate with suppliers.",
+        "Generate savings and additional benefits on launches, openings and corporate events.",
+        "Control waste and follow up on action plans."
+      ]
+    }
+  },
   "growth": {
     "title": {
-      "es": "Growth Manager",
-      "en": "Growth Manager"
+      "es": "Revenue Manager",
+      "en": "Revenue Manager"
     },
     "fn": {
       "es": [
