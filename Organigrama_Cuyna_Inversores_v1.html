@@ -1290,16 +1290,20 @@ function drawLines(){
     if(!childEl || !parentEl) return;
     const c = childEl.getBoundingClientRect();
     const p = parentEl.getBoundingClientRect();
-    const cx = c.left + c.width/2 - rootRect.left;
-    const cy = c.top - rootRect.top;
-    const px = p.left + p.width/2 - rootRect.left;
-    const py = p.bottom - rootRect.top;
-    const midY = py + (cy - py) / 2;
+    const round = v => Math.round(v * 2) / 2; // snap to nearest half-pixel to avoid sub-pixel seams
+    const cx = round(c.left + c.width/2 - rootRect.left);
+    const cy = round(c.top - rootRect.top);
+    const px = round(p.left + p.width/2 - rootRect.left);
+    const py = round(p.bottom - rootRect.top);
+    const midY = round(py + (cy - py) / 2);
     const path = document.createElementNS('http://www.w3.org/2000/svg','path');
     path.setAttribute('d', `M ${px} ${py} L ${px} ${midY} L ${cx} ${midY} L ${cx} ${cy}`);
     path.setAttribute('fill','none');
     path.setAttribute('stroke','#B7BBBC');
     path.setAttribute('stroke-width','1.5');
+    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('stroke-linejoin','round');
+    path.setAttribute('shape-rendering','geometricPrecision');
     svg.appendChild(path);
   });
 }
